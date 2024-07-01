@@ -8,6 +8,17 @@ import requests
 OPENWEATHER_API_KEY = "727ccf37ec07d9c535a70e5d5f6914dd"
 @require_GET
 def hello(request):
+    """
+        View function to handle GET requests and respond with JSON data.
+        
+        This function get the visitor's IP address, determines their location,
+        fetches the current temperature at that location, and constructs a greeting
+        message with this information.
+
+        External API Usage:
+        - ip-api.com: Retrieves location data based on IP address.
+        - api.openweathermap.org: Retrieves weather data based on geographical coordinates.
+    """
     visitor_name = request.GET.get("visitor_name", "Guest")
     client_ip = request.META.get("HTTP_X_FORWARDED_FOR")
     if client_ip:
