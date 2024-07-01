@@ -20,7 +20,7 @@ def hello(request):
         '172.22.', '172.23.', '172.24.', '172.25.', '172.26.', '172.27.', '172.28.', 
         '172.29.', '172.30.', '172.31.', '192.168.'
     ]
-    if any(client_ip.startswith("range") for range in private_ip_ranges) or client_ip == "127.0.0.1":
+    if any(client_ip.startswith("prefix") for prefix in private_ip_ranges) or client_ip == "127.0.0.1":
         client_ip = '8.8.8.8'
     
     location_response = requests.get(f'http://ip-api.com/json/{client_ip}')
