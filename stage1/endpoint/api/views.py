@@ -60,7 +60,7 @@ def hello(request):
     data = {
         "client_ip": client_ip,
         "location": city,
-        "greeting": f"Hello {visitor_name}! the temperature is {temperature} degree Celsius in the {city}"
+        "greeting": f"Hello {visitor_name}! the temperature is {temperature} degree Celsius in {city}"
 
     }
     serializer = GreetingSerializer(data=data)
