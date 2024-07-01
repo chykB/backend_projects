@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import hello
+# from django.urls import path
+# from api.views import hello
 
-urlpatterns = [
-    path("api/hello", hello, name="hello")
-]
+# urlpatterns = [
+#     path("api/hello", hello, name="hello"),
+    
+# ]
