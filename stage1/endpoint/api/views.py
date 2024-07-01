@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from .serializers import GreetingSerializer
@@ -10,9 +9,20 @@ OPENWEATHER_API_KEY = "727ccf37ec07d9c535a70e5d5f6914dd"
 @require_GET
 def hello(request):
     visitor_name = request.GET.get("visitor_name", "Guest")
-    client_ip = request.META.get("REMOTE_ADDR")
-    if client_ip == '127.0.0.1':
+    client_ip = request.META.get("HTTP_X_FORWARDED_FOR")
+    if client_ip:
+        client_ip = client_ip.split("," [0])
+    else:
+        client_ip = request.META.get("REMOTE_ADDR")
+    
+    private_ip_ranges = [
+        '10.', '172.16.', '172.17.', '172.18.', '172.19.', '172.20.', '172.21.', 
+        '172.22.', '172.23.', '172.24.', '172.25.', '172.26.', '172.27.', '172.28.', 
+        '172.29.', '172.30.', '172.31.', '192.168.'
+    ]
+    if any(client_ip.startswith("range") for range in private_ip_ranges) or client_ip == "127.0.0.1":
         client_ip = '8.8.8.8'
+    
     location_response = requests.get(f'http://ip-api.com/json/{client_ip}')
     if location_response.status_code==200:
         location_data = location_response.json()
