@@ -11,17 +11,27 @@ def hello(request):
     visitor_name = request.GET.get("visitor_name", "Guest")
     client_ip = request.META.get("HTTP_X_FORWARDED_FOR")
     if client_ip:
-        client_ip = client_ip.split("," [0])
+        client_ip = client_ip.split("," [0]).strip()
     else:
         client_ip = request.META.get("REMOTE_ADDR")
+
+    # Ensure client_ip is a string
+    if isinstance(client_ip, list):
+        client_ip = client_ip[0]
+    client_ip = str(client_ip)
     
-    private_ip_ranges = [
-        '10.', '172.16.', '172.17.', '172.18.', '172.19.', '172.20.', '172.21.', 
-        '172.22.', '172.23.', '172.24.', '172.25.', '172.26.', '172.27.', '172.28.', 
-        '172.29.', '172.30.', '172.31.', '192.168.'
-    ]
-    if any(client_ip.startswith(prefix) for prefix in private_ip_ranges) or client_ip == "127.0.0.1":
-        client_ip = '8.8.8.8'
+    private_ip_ranges = {
+        '10.': True,
+        '172.16.': True, '172.17.': True, '172.18.': True, '172.19.': True,
+        '172.20.': True, '172.21.': True, '172.22.': True, '172.23.': True,
+        '172.24.': True, '172.25.': True, '172.26.': True, '172.27.': True,
+        '172.28.': True, '172.29.': True, '172.30.': True, '172.31.': True,
+        '192.168.': True
+    }
+    for prefix in private_ip_ranges:
+        if client_ip.startswith(prefix) or client_ip == '127.0.0.1':
+            client_ip = '8.8.8.8'
+            break
     
     location_response = requests.get(f'http://ip-api.com/json/{client_ip}')
     if location_response.status_code==200:
