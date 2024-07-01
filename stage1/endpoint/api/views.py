@@ -11,7 +11,7 @@ def hello(request):
     visitor_name = request.GET.get("visitor_name", "Guest")
     client_ip = request.META.get("HTTP_X_FORWARDED_FOR")
     if client_ip:
-        client_ip = client_ip.split("," [0]).strip()
+        client_ip = client_ip.split("," [0])
     else:
         client_ip = request.META.get("REMOTE_ADDR")
 
