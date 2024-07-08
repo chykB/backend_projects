@@ -7,10 +7,19 @@ from .models import User, Organisation
 from .serializers import UserSerializer, LoginSerializer, OrganisationSerializer
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class RegisterView(APIView):
+    def get(self, request):
+        
+        return Response({"message": "Please use POST method to register"}, status=status.HTTP_200_OK)
+
+
     def post(self, request):
+        logger.info(f"Received data: {request.data}")
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
