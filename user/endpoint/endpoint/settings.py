@@ -101,11 +101,11 @@ WSGI_APPLICATION = 'endpoint.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'usermanagement', 
-        'USER': 'super',
-        'PASSWORD': 'securepassword',
-        'HOST': 'chyka-3933.postgres.pythonanywhere-services.com',
-        'PORT': '13933',
+        'NAME': 'user_management', 
+        'USER': 'chykab',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

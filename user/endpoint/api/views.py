@@ -99,7 +99,7 @@ class AddUserToOrganisationView(APIView):
     def post(self, request, org_id):
         try:
             org = get_object_or_404(Organisation, org_id=org_id)
-            user_id = request.data.get('userId')
+            user_id = request.data.get('user_id')
             
             if not user_id:
                 return Response({"status": "error", "message": "userId is required"}, status=status.HTTP_400_BAD_REQUEST)
